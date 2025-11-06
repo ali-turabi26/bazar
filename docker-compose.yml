@@ -1,9 +1,11 @@
 version: "3.8"
+
 services:
   catalog:
     build: ./catalog
-    container_name: catalog
-    ports: ["5001:5000"]
+    container_name: bazar-catalog-1
+    ports:
+      - "5001:5000"
     environment:
       - DB_PATH=/data/catalog.db
     volumes:
@@ -11,23 +13,27 @@ services:
 
   order:
     build: ./order
-    container_name: order
-    ports: ["5002:5000"]
+    container_name: bazar-order-1
+    ports:
+      - "5002:5000"
     environment:
       - CATALOG_URL=http://catalog:5000
       - ORDERS_DB=/data/orders.db
-    depends_on: [catalog]
+    depends_on:
+      - catalog
     volumes:
       - orders_data:/data
 
   frontend:
     build: ./frontend
-    container_name: frontend
-    ports: ["5000:5000"]
+    container_name: bazar-frontend-1
+    ports:
+      - "5000:5000"
     environment:
       - CATALOG_URL=http://catalog:5000
       - ORDER_URL=http://order:5000
-    depends_on: [order]
+    depends_on:
+      - order
 
 volumes:
   catalog_data:
