@@ -1,2 +1,3 @@
-Flask
+flask
 requests
+sqlite3-binary
