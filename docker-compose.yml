@@ -5,7 +5,7 @@ services:
     build: ./catalog
     container_name: bazar-catalog-1
     ports:
-      - "5001:5000"
+      - "5001:5000"           # host:container
     environment:
       - DB_PATH=/data/catalog.db
     volumes:
@@ -34,6 +34,7 @@ services:
       - ORDER_URL=http://order:5000
     depends_on:
       - order
+      - catalog
 
 volumes:
   catalog_data:
